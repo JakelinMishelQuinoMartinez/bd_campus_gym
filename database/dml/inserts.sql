@@ -28,3 +28,14 @@ INSERT INTO socios (nombres, apellidos, telefono) VALUES
 ('Laura', 'Romero', '3176543210'),
 ('Andrés', 'Torres', '3165432109'),
 ('Valentina', 'Castro', '3143210987');
+
+-- =================================================== DATOS PARA PLANES DE ENTRENAMIENTO
+INSERT INTO planes_entrenamientos (nombre) VALUES 
+('Plan Principiante'), 
+('Plan Intermedio'), 
+('Plan Avanzado'), 
+('Plan Hipertrofia'), 
+('Plan Definición'), 
+('Plan Powerlifting'), 
+('Plan CrossFit'), 
+('Plan Natación');
