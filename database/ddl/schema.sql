@@ -29,3 +29,9 @@ CREATE TABLE IF NOT EXISTS planes_entrenamientos (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(120) NOT NULL
 );
+
+-- =================================================== ESPECIALIDADES
+CREATE TABLE IF NOT EXISTS especialidades (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(120) NOT NULL
+);
