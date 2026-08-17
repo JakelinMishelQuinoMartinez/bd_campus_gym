@@ -32,3 +32,24 @@ SELECT
 FROM INFORMATION_SCHEMA.PARTITIONS
 WHERE TABLE_NAME = 'auditoria_entrenadores_particionada'
 AND TABLE_SCHEMA = 'campuslands_gym';
+
+
+-- =================================================== PREPARE, EXECUTE Y DEALLOCATE
+-- Preparar una consulta dinámica
+SET @tabla = 'socios';
+SET @columna = 'nombres';
+SET @valor = 'Carlos';
+
+SET @sql = CONCAT('SELECT * FROM ', @tabla, ' WHERE ', @columna, ' = ?');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt USING @valor;
+DEALLOCATE PREPARE stmt;
+
+-- Otro ejemplo con consulta dinámica para contar socios por sede
+SET @sede_id = 1;
+SET @sql = CONCAT('SELECT COUNT(*) FROM socio_plan_entrenadores WHERE sede_id = ', @sede_id);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
