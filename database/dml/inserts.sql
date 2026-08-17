@@ -49,3 +49,16 @@ INSERT INTO especialidades (nombre) VALUES
 ('Yoga'), 
 ('Powerlifting'), 
 ('Rehabilitación');
+
+-- =================================================== DATOS PARA ENTRENADORES
+INSERT INTO entrenadores (nombre, especialidad_id) VALUES 
+('Juan Carlos Ramírez', 1),
+('María Fernanda González', 2),
+('Pedro Pablo Álvarez', 3),
+('Carolina Jiménez', 4),
+('Roberto Sánchez', 5),
+('Andrea Torres', 6),
+('Felipe Castro', 7),
+('Daniela Rincón', 1),
+('Oscar Herrera', 2),
+('Luisa Franco', 3);
