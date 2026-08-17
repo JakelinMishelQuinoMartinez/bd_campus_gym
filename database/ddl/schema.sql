@@ -9,3 +9,9 @@ CREATE TABLE IF NOT EXISTS socios (
     apellidos VARCHAR(60) NOT NULL,
     telefono VARCHAR(15) NOT NULL
 );
+
+-- =================================================== CIUDADES
+CREATE TABLE IF NOT EXISTS ciudades (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(120) NOT NULL
+);
