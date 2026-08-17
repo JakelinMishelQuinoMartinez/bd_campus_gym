@@ -1,0 +1,27 @@
+USE campuslands_gym;
+
+-- =================================================== EVENTO: reporte diario - cantidad de socios por entrenador
+CREATE TABLE IF NOT EXISTS reportes_diarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fecha_reporte DATE,
+    entrenador_nombre VARCHAR(120),
+    cantidad_socios INT
+);
+
+DELIMITER //
+CREATE EVENT IF NOT EXISTS reporte_diario_socios
+ON SCHEDULE EVERY 1 DAY 
+STARTS CURRENT_TIMESTAMP
+DO
+BEGIN
+    -- Insertar nuevo reporte
+    INSERT INTO reportes_diarios (fecha_reporte, entrenador_nombre, cantidad_socios)
+    SELECT 
+        CURDATE() AS fecha,
+        e.nombre,
+        COUNT(spe.socio_id) AS total_socios
+    FROM entrenadores e
+    LEFT JOIN socio_plan_entrenadores spe ON e.id = spe.entrenador_id
+    GROUP BY e.id;
+END //
+DELIMITER ;
