@@ -161,3 +161,39 @@ SELECT
     nombres,
     generar_codigo_socio(id) AS codigo_unico
 FROM socios;
+
+-- =================================================== FUNCIÓN CON MANEJO DE ERRORES
+DELIMITER //
+CREATE FUNCTION calcular_socios_entrenador_seguro(p_entrenador_id INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE total_socios INT;
+    DECLARE resultado INT;
+    
+    -- Manejar error si el entrenador no existe
+    BEGIN
+        DECLARE EXIT HANDLER FOR SQLSTATE '02000'
+        BEGIN
+            RETURN 0;
+        END;
+        
+        SELECT COUNT(*) INTO total_socios
+        FROM socio_plan_entrenadores
+        WHERE entrenador_id = p_entrenador_id;
+        
+        SET resultado = total_socios;
+    END;
+    
+    -- Verificar si el entrenador existe
+    IF NOT EXISTS (SELECT 1 FROM entrenadores WHERE id = p_entrenador_id) THEN
+        RETURN -1; -- Código de error: entrenador no existe
+    END IF;
+    
+    RETURN IFNULL(resultado, 0);
+END //
+DELIMITER ;
+
+-- Probar función con manejo de errores
+SELECT calcular_socios_entrenador_seguro(1) AS socios_entrenador_1;
+SELECT calcular_socios_entrenador_seguro(99) AS socios_entrenador_inexistente;
