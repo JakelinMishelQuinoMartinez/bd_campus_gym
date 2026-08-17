@@ -32,3 +32,12 @@ SELECT
 FROM entrenadores e
 LEFT JOIN socio_plan_entrenadores spe ON e.id = spe.entrenador_id
 GROUP BY e.id;
+
+-- =================================================== 4. CONSULTA CON INOUT (RIGHT JOIN)
+-- Mostrar todas las sedes y si tienen socios asignados
+SELECT 
+    sd.nombre AS Sede,
+    COUNT(spe.socio_id) AS CantidadSocios
+FROM sedes sd
+RIGHT JOIN socio_plan_entrenadores spe ON sd.id = spe.sede_id
+GROUP BY sd.id;
