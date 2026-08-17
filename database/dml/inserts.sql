@@ -62,3 +62,21 @@ INSERT INTO entrenadores (nombre, especialidad_id) VALUES
 ('Daniela Rincón', 1),
 ('Oscar Herrera', 2),
 ('Luisa Franco', 3);
+
+-- =================================================== DATOS PARA SOCIO_PLAN_ENTRENADORES
+INSERT INTO socio_plan_entrenadores (socio_id, plan_entrenamiento_id, entrenador_id, sede_id) VALUES 
+(1, 1, 1, 1),
+(2, 2, 2, 2),
+(3, 3, 3, 3),
+(4, 4, 4, 4),
+(5, 5, 5, 5),
+(6, 6, 6, 1),
+(7, 7, 7, 2),
+(8, 8, 8, 3),
+(9, 1, 9, 4),
+(10, 2, 10, 5),
+(1, 3, 2, 1),
+(2, 4, 3, 2),
+(3, 5, 4, 3),
+(4, 6, 5, 4),
+(5, 7, 6, 5);
