@@ -38,3 +38,39 @@ DELIMITER ;
 
 -- Probar función simple
 SELECT calcular_comision_entrenador(1, 10) AS comision_entrenador;
+
+-- =================================================== FUNCIÓN CON CONDICIONES
+DELIMITER //
+CREATE FUNCTION clasificar_socio(p_socio_id INT)
+RETURNS VARCHAR(20)
+DETERMINISTIC
+BEGIN
+    DECLARE cantidad_planes INT;
+    DECLARE clasificacion VARCHAR(20);
+    
+    -- Contar planes del socio
+    SELECT COUNT(*) INTO cantidad_planes
+    FROM socio_plan_entrenadores
+    WHERE socio_id = p_socio_id;
+    
+    -- Clasificar según cantidad de planes
+    IF cantidad_planes = 0 THEN
+        SET clasificacion = 'Inactivo';
+    ELSEIF cantidad_planes = 1 THEN
+        SET clasificacion = 'Principiante';
+    ELSEIF cantidad_planes = 2 THEN
+        SET clasificacion = 'Regular';
+    ELSE
+        SET clasificacion = 'VIP';
+    END IF;
+    
+    RETURN clasificacion;
+END //
+DELIMITER ;
+
+-- Probar función con condiciones
+SELECT 
+    nombres, 
+    apellidos,
+    clasificar_socio(id) AS clasificacion
+FROM socios;
