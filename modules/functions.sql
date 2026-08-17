@@ -113,3 +113,28 @@ SELECT
     nombre AS entrenador,
     contar_socios_entrenador(id) AS total_socios
 FROM entrenadores;
+
+-- =================================================== FUNCIÓN QUE ACCEDE A DATOS
+DELIMITER //
+CREATE FUNCTION obtener_sede_socio(p_socio_id INT)
+RETURNS VARCHAR(120)
+DETERMINISTIC
+BEGIN
+    DECLARE sede_nombre VARCHAR(120);
+    
+    SELECT sd.nombre INTO sede_nombre
+    FROM socio_plan_entrenadores spe
+    JOIN sedes sd ON spe.sede_id = sd.id
+    WHERE spe.socio_id = p_socio_id
+    LIMIT 1;
+    
+    RETURN sede_nombre;
+END //
+DELIMITER ;
+
+-- Probar función que accede a datos
+SELECT 
+    nombres,
+    apellidos,
+    obtener_sede_socio(id) AS sede_principal
+FROM socios;
