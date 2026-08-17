@@ -39,3 +39,13 @@ INSERT INTO planes_entrenamientos (nombre) VALUES
 ('Plan Powerlifting'), 
 ('Plan CrossFit'), 
 ('Plan Natación');
+
+-- =================================================== DATOS PARA ESPECIALIDADES
+INSERT INTO especialidades (nombre) VALUES 
+('Musculación'), 
+('Cardio'), 
+('CrossFit'), 
+('Natación'), 
+('Yoga'), 
+('Powerlifting'), 
+('Rehabilitación');
