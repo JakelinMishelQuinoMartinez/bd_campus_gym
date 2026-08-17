@@ -138,3 +138,26 @@ SELECT
     apellidos,
     obtener_sede_socio(id) AS sede_principal
 FROM socios;
+
+-- =================================================== FUNCIÓN NO DETERMINÍSTICA
+DELIMITER //
+CREATE FUNCTION generar_codigo_socio(p_socio_id INT)
+RETURNS VARCHAR(20)
+NOT DETERMINISTIC
+BEGIN
+    DECLARE codigo VARCHAR(20);
+    DECLARE fecha_actual DATE;
+    
+    SET fecha_actual = CURDATE();
+    SET codigo = CONCAT('SOC', LPAD(p_socio_id, 5, '0'), YEAR(fecha_actual), MONTH(fecha_actual));
+    
+    RETURN codigo;
+END //
+DELIMITER ;
+
+-- Probar función no determinística
+SELECT 
+    id,
+    nombres,
+    generar_codigo_socio(id) AS codigo_unico
+FROM socios;
