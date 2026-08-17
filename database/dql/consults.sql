@@ -23,3 +23,12 @@ INNER JOIN planes_entrenamientos p ON spe.plan_entrenamiento_id = p.id
 INNER JOIN entrenadores e ON spe.entrenador_id = e.id
 INNER JOIN sedes sd ON spe.sede_id = sd.id
 INNER JOIN ciudades c ON sd.id_ciudad = c.id;
+
+-- =================================================== 3. CONSULTA CON OUT (LEFT JOIN)
+-- Mostrar todos los entrenadores y si tienen socios asignados
+SELECT 
+    e.nombre AS Entrenador,
+    COUNT(spe.socio_id) AS CantidadSocios
+FROM entrenadores e
+LEFT JOIN socio_plan_entrenadores spe ON e.id = spe.entrenador_id
+GROUP BY e.id;
