@@ -56,3 +56,11 @@ CREATE TABLE IF NOT EXISTS socio_plan_entrenadores (
     FOREIGN KEY (entrenador_id) REFERENCES entrenadores(id),
     FOREIGN KEY (sede_id) REFERENCES sedes(id)
 );
+
+-- =================================================== TABLA PARA AUDITORÍA (para triggers)
+CREATE TABLE IF NOT EXISTS auditoria_entrenadores (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    entrenador_id INT NOT NULL,
+    fecha_asignacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    mensaje VARCHAR(255)
+);
