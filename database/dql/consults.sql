@@ -41,3 +41,18 @@ SELECT
 FROM sedes sd
 RIGHT JOIN socio_plan_entrenadores spe ON sd.id = spe.sede_id
 GROUP BY sd.id;
+
+-- =================================================== 5. CONSULTA CON IF_THEN_ELSE (CASE)
+-- Clasificar socios según la cantidad de planes que tienen
+SELECT 
+    s.nombres,
+    s.apellidos,
+    COUNT(spe.id) AS cantidad_planes,
+    CASE 
+        WHEN COUNT(spe.id) = 1 THEN 'Un plan'
+        WHEN COUNT(spe.id) = 2 THEN 'Dos planes'
+        ELSE 'Múltiples planes'
+    END AS clasificacion
+FROM socios s
+LEFT JOIN socio_plan_entrenadores spe ON s.id = spe.socio_id
+GROUP BY s.id;
