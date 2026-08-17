@@ -23,3 +23,9 @@ CREATE TABLE IF NOT EXISTS sedes (
     id_ciudad INT NOT NULL,
     FOREIGN KEY (id_ciudad) REFERENCES ciudades(id)
 );
+
+-- =================================================== PLANES_ENTRENAMIENTO
+CREATE TABLE IF NOT EXISTS planes_entrenamientos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(120) NOT NULL
+);
