@@ -74,3 +74,42 @@ SELECT
     apellidos,
     clasificar_socio(id) AS clasificacion
 FROM socios;
+
+
+-- =================================================== FUNCIÓN CON BUCLES
+DELIMITER //
+CREATE FUNCTION contar_socios_entrenador(p_entrenador_id INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE contador INT DEFAULT 0;
+    DECLARE done INT DEFAULT 0;
+    DECLARE socio_id INT;
+    DECLARE total_socios INT DEFAULT 0;
+    
+    DECLARE cur_socios CURSOR FOR 
+        SELECT DISTINCT socio_id 
+        FROM socio_plan_entrenadores 
+        WHERE entrenador_id = p_entrenador_id;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+    
+    OPEN cur_socios;
+    
+    contar_loop: LOOP
+        FETCH cur_socios INTO socio_id;
+        IF done THEN
+            LEAVE contar_loop;
+        END IF;
+        SET total_socios = total_socios + 1;
+    END LOOP contar_loop;
+    
+    CLOSE cur_socios;
+    RETURN total_socios;
+END //
+DELIMITER ;
+
+-- Probar función con bucles
+SELECT 
+    nombre AS entrenador,
+    contar_socios_entrenador(id) AS total_socios
+FROM entrenadores;
