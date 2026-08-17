@@ -35,3 +35,11 @@ CREATE TABLE IF NOT EXISTS especialidades (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(120) NOT NULL
 );
+
+-- =================================================== ENTRENADORES
+CREATE TABLE IF NOT EXISTS entrenadores (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(120) NOT NULL,
+    especialidad_id INT NOT NULL,
+    FOREIGN KEY (especialidad_id) REFERENCES especialidades(id)
+);
