@@ -1,0 +1,72 @@
+USE campuslands_gym;
+
+-- =================================================== 1. CONSULTA CON IN
+-- Mostrar socios con planes específicos (principiante, intermedio)
+SELECT s.nombres, s.apellidos, p.nombre AS plan
+FROM socios s
+JOIN socio_plan_entrenadores spe ON s.id = spe.socio_id
+JOIN planes_entrenamientos p ON spe.plan_entrenamiento_id = p.id
+WHERE p.id IN (1, 2, 3);
+
+-- =================================================== 2. CONSULTA CON INNER JOIN (múltiples tablas)
+-- Mostrar información completa de socios con sus entrenadores y sedes
+SELECT 
+    s.nombres AS Socio,
+    s.apellidos AS Apellidos,
+    p.nombre AS Plan,
+    e.nombre AS Entrenador,
+    sd.nombre AS Sede,
+    c.nombre AS Ciudad
+FROM socios s
+INNER JOIN socio_plan_entrenadores spe ON s.id = spe.socio_id
+INNER JOIN planes_entrenamientos p ON spe.plan_entrenamiento_id = p.id
+INNER JOIN entrenadores e ON spe.entrenador_id = e.id
+INNER JOIN sedes sd ON spe.sede_id = sd.id
+INNER JOIN ciudades c ON sd.id_ciudad = c.id;
+
+-- =================================================== 3. CONSULTA CON OUT (LEFT JOIN)
+-- Mostrar todos los entrenadores y si tienen socios asignados
+SELECT 
+    e.nombre AS Entrenador,
+    COUNT(spe.socio_id) AS CantidadSocios
+FROM entrenadores e
+LEFT JOIN socio_plan_entrenadores spe ON e.id = spe.entrenador_id
+GROUP BY e.id;
+
+-- =================================================== 4. CONSULTA CON INOUT (RIGHT JOIN)
+-- Mostrar todas las sedes y si tienen socios asignados
+SELECT 
+    sd.nombre AS Sede,
+    COUNT(spe.socio_id) AS CantidadSocios
+FROM sedes sd
+RIGHT JOIN socio_plan_entrenadores spe ON sd.id = spe.sede_id
+GROUP BY sd.id;
+
+-- =================================================== 5. CONSULTA CON IF_THEN_ELSE (CASE)
+-- Clasificar socios según la cantidad de planes que tienen
+SELECT 
+    s.nombres,
+    s.apellidos,
+    COUNT(spe.id) AS cantidad_planes,
+    CASE 
+        WHEN COUNT(spe.id) = 1 THEN 'Un plan'
+        WHEN COUNT(spe.id) = 2 THEN 'Dos planes'
+        ELSE 'Múltiples planes'
+    END AS clasificacion
+FROM socios s
+LEFT JOIN socio_plan_entrenadores spe ON s.id = spe.socio_id
+GROUP BY s.id;
+
+-- =================================================== 6. CONSULTA CON SUBQUERY
+-- Mostrar entrenadores con más socios que el promedio
+SELECT e.nombre, COUNT(spe.socio_id) AS total_socios
+FROM entrenadores e
+JOIN socio_plan_entrenadores spe ON e.id = spe.entrenador_id
+GROUP BY e.id
+HAVING COUNT(spe.socio_id) > (
+    SELECT AVG(total) FROM (
+        SELECT COUNT(socio_id) AS total 
+        FROM socio_plan_entrenadores 
+        GROUP BY entrenador_id
+    ) AS subquery
+);
