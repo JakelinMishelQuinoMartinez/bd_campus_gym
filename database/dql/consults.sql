@@ -56,3 +56,17 @@ SELECT
 FROM socios s
 LEFT JOIN socio_plan_entrenadores spe ON s.id = spe.socio_id
 GROUP BY s.id;
+
+-- =================================================== 6. CONSULTA CON SUBQUERY
+-- Mostrar entrenadores con más socios que el promedio
+SELECT e.nombre, COUNT(spe.socio_id) AS total_socios
+FROM entrenadores e
+JOIN socio_plan_entrenadores spe ON e.id = spe.entrenador_id
+GROUP BY e.id
+HAVING COUNT(spe.socio_id) > (
+    SELECT AVG(total) FROM (
+        SELECT COUNT(socio_id) AS total 
+        FROM socio_plan_entrenadores 
+        GROUP BY entrenador_id
+    ) AS subquery
+);
