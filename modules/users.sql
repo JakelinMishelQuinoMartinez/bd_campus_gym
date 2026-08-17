@@ -22,3 +22,16 @@ GRANT SELECT ON campuslands_gym.sedes TO 'usuario_gym'@'localhost';
 
 -- =================================================== VER PRIVILEGIOS DE UN USUARIO
 SHOW GRANTS FOR 'usuario_gym'@'localhost';
+
+-- =================================================== ASIGNAR PERMISOS DE ADMIN
+-- Admin tiene todos los permisos sobre todas las tablas
+GRANT ALL PRIVILEGES ON campuslands_gym.* TO 'admin_gym'@'localhost';
+
+-- =================================================== PRIVILEGIOS SOBRE COLUMNAS
+-- Otorgar permisos solo sobre columnas específicas
+GRANT SELECT (nombres, apellidos) ON campuslands_gym.socios TO 'consultor_gym'@'localhost';
+GRANT SELECT (nombre) ON campuslands_gym.entrenadores TO 'consultor_gym'@'localhost';
+GRANT SELECT (nombre) ON campuslands_gym.sedes TO 'consultor_gym'@'localhost';
+
+-- Verificar permisos
+SHOW GRANTS FOR 'consultor_gym'@'localhost';
