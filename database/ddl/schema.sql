@@ -43,3 +43,16 @@ CREATE TABLE IF NOT EXISTS entrenadores (
     especialidad_id INT NOT NULL,
     FOREIGN KEY (especialidad_id) REFERENCES especialidades(id)
 );
+
+-- =================================================== SOCIO_PLAN_ENTRENADORES
+CREATE TABLE IF NOT EXISTS socio_plan_entrenadores (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    socio_id INT NOT NULL,
+    plan_entrenamiento_id INT NOT NULL,
+    entrenador_id INT NOT NULL,
+    sede_id INT NOT NULL,
+    FOREIGN KEY (socio_id) REFERENCES socios(id),
+    FOREIGN KEY (plan_entrenamiento_id) REFERENCES planes_entrenamientos(id),
+    FOREIGN KEY (entrenador_id) REFERENCES entrenadores(id),
+    FOREIGN KEY (sede_id) REFERENCES sedes(id)
+);
