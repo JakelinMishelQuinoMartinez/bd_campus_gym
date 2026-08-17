@@ -4,7 +4,7 @@
 
 ### 0. Normalización y diagrama EER de las tablas
 
-![Normalizacion](../evidences/image.png)
+![Normalizacion](../evidences/normalizacion.png)
 ![Diagrama EER](../evidences/diagrama_eer.png)
 
 ---
